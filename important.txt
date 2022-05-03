@@ -1,0 +1,11 @@
+Component Types
+
+No official Differentiation but normally
+Any frame work or library has the component type.
+
+1) Stateful components ---> Containers
+  : all about holding and managing data and passing data around to other components
+
+2) Presentational components ---> Components
+  : it might have some static data but the data is received from the outside
+  and outputs it (which means rendering data in the browser.)  
