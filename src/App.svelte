@@ -4,12 +4,12 @@
   import MeetupGrid from './Meetups/MeetupGrid.svelte';
   import TextInput from './UI/TextInput.svelte';
 
-  let title = '';
-  let subtitle = '';
-  let description = '';
-  let imageUrl = '';
-  let address = '';
-  let contactEmail = '';
+  // let title = '';
+  // let subtitle = '';
+  // let description = '';
+  // let imageUrl = '';
+  // let address = '';
+  // let contactEmail = '';
 
   let meetsups = [{
     id: 'm1',
@@ -30,30 +30,37 @@
   }];
 
   const inputs = [{
-    inputName: 'title',
+    id: 'title',
+    label: 'Title',
     value: '',
   }, {
-    inputName: 'subtitle',
-    value: subtitle,
-  }, {
-    inputName: 'imageUrl',
+    id: 'subtitle',
+    label: 'Subtitle',
     value: '',
   }, {
-    inputName: 'address',
+    id: 'imageUrl',
+    label: 'Image URL',
     value: '',
   }, {
-    inputName: 'email',
+    id: 'address',
+    label: 'Address',
     value: '',
   }, {
-    inputName: 'description',
+    id: 'contactEmail',
+    label: 'Contact Email',
     value: '',
+  }, {
+    id: 'description',
+    label: 'Description',
+    value: '',
+    rows: 3,
   }];
 
-  function addMeetup(event) {
+  function addMeetup() {
     meetsups = [ 
       {
         id: Math.random().toString(),
-        title: inputs[0].value,
+        title,
         subtitle,
         description,
         imageUrl,
@@ -62,6 +69,10 @@
       },
       ...meetsups, 
     ];
+  }
+
+  function handleOnChange({ target: {  value }}, index) {
+    inputs[index].value = value;
   }
 </script>
 
@@ -75,12 +86,32 @@
 <main>
   <!-- Same as React but we can put preventDefault here -->
   <form on:submit|preventDefault={addMeetup}>
-
-    {#each inputs as {inputName, value} (inputName)}
-      <TextInput inputName={inputName} value={value} />
+    {#each inputs as {id, label, value, rows}, index (id)}
+      <TextInput
+        id={id}
+        label={label}
+        value={value}
+        rows={rows || null}
+        on:input={(event) => handleOnChange(event, index)}
+      />
     {/each}
+    
+    <!-- 
+      2) Hard coding 
+      Important: on:input function should be defined here in the parent.
+    -->
+    <!-- 
+    <TextInput id="title" label="Title" value={title} on:input={(event) => { title = event.target.value }} /> 
+    <TextInput id="subtitle" label="Subtitle" value={subtitle} on:input={(event) => { subtitle = event.target.value }} /> 
+    <TextInput id="imageUrl" label="Image URL" value={imageUrl} on:input={(event) => { imageUrl = event.target.value }} /> 
+    <TextInput id="address" label="Address" value={address} on:input={(event) => { address = event.target.value }} /> 
+    <TextInput id="contactEmail" label="Contact Email" value={contactEmail} on:input={(event) => { contactEmail = event.target.value }} /> 
+    <TextInput id="description" rows={3} label="Description" value={description} on:input={(event) => { description = event.target.value }} />  
+    -->
 
-    <!-- <div class="form-control">
+    <!-- 1) -->
+    <!-- 
+    <div class="form-control">
       <label for="title">Title</label>
       <input type="text" id="title" bind:value={title} />
     </div>
@@ -103,7 +134,8 @@
     <div class="form-control">
       <label for="descritption">Descritption</label>
       <textarea rows={3} id="descritption" bind:value={description} />
-    </div> -->
+    </div>
+    -->
     <button type="submit">Submit</button>
   </form>
   <MeetupGrid meetsups={meetsups} />
