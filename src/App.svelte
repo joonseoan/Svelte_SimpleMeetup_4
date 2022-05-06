@@ -3,7 +3,9 @@
   // import MeetupItem from './Meetups/MeetupItem.svelte';
   import MeetupGrid from './Meetups/MeetupGrid.svelte';
   import TextInput from './UI/TextInput.svelte';
+  import Button from './UI/Button.svelte';
 
+  // Not required since each statement is used.
   // let title = '';
   // let subtitle = '';
   // let description = '';
@@ -29,7 +31,7 @@
     contactEmail: 'swim@together.com',
   }];
 
-  const inputs = [{
+  let inputs = [{
     id: 'title',
     label: 'Title',
     value: '',
@@ -57,22 +59,41 @@
   }];
 
   function addMeetup() {
-    meetsups = [ 
-      {
-        id: Math.random().toString(),
-        title,
-        subtitle,
-        description,
-        imageUrl,
-        address,
-        contactEmail,
-      },
-      ...meetsups, 
-    ];
+    if (inputs.every(({ value }) =>  value)) {
+      meetsups = [
+        {
+          id: Math.random().toString(),
+          ...inputs.reduce((init, { id, value }) => {
+            init = { ...init, [id]: value };
+            return init;
+          }, {}),
+        },
+        
+        ...meetsups,
+      ];
+      
+      inputs = [ ...inputs.map((input) => ({ ...input, value: '' }))];
+    }
+
+    // 1)
+    // meetsups = [ 
+    //   {
+    //     id: Math.random().toString(),
+    //     title,
+    //     subtitle,
+    //     description,
+    //     imageUrl,
+    //     address,
+    //     contactEmail,
+    //   },
+    //   ...meetsups, 
+    // ];
   }
 
   function handleOnChange({ target: {  value }}, index) {
-    inputs[index].value = value;
+    console.log('value: ', value)
+    inputs.splice(index, 1, { ...inputs[index], value });
+    inputs = [...inputs];
   }
 </script>
 
@@ -136,7 +157,14 @@
       <textarea rows={3} id="descritption" bind:value={description} />
     </div>
     -->
-    <button type="submit">Submit</button>
+    
+    
+    <Button type="submit" caption="Save" />
+    <!--
+      // 1) 
+      <button type="submit">Submit</button> 
+    -->
+
   </form>
   <MeetupGrid meetsups={meetsups} />
 </main>
