@@ -1,4 +1,6 @@
 <script>
+  import Button from '../UI/Button.svelte';
+
   export let title;
   export let subtitle;
   export let description;
@@ -42,6 +44,7 @@
 
   .content {
     text-align: right;
+    height: 4rem;
   }
 </style>
 
@@ -59,8 +62,9 @@
   </div>
   <footer>
     <!-- svelte-ignore a11y-missing-content -->
-    <a href="mailto:{contactEmail}">Contact</a>
-    <button>Show Details</button>
-    <button>Favorite </button>
+    <!-- <a href="mailto:{contactEmail}">Contact</a> -->
+    <Button caption="Contact" href="mailto:{contactEmail}"/>
+    <Button caption="Show Details" type="button" mode="mode-1" />
+    <Button caption="Favorite" type="button" />
   </footer>
 </article>

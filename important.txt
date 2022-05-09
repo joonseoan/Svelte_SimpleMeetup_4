@@ -1,14 +1,22 @@
-Component Types
+1. Component Types
 
 No official Differentiation but normally
 Any frame work or library has the component type.
 
-1) Stateful components ---> Containers
-  : all about holding and managing data and passing data around to other components
-  : In this project, App.svelte
+  1) Containers
+    1) Stateful components
+    2) Hold & manage data, pass data around
+    3) <App />, <Products />, <Checkout />...
+    4) Only a few (depending on app size per app)
+    
 
+  2) Components
+    1) Presentational components
+    2) Receive & output data (which means rendering data in the browser.)
+    3) <Modal />, <Card />, <Button />
+    4) Use many!
+  
+2. Nested Components & Communication
 
-2) Presentational components ---> Components
-  : it might have some static data but the data is received from the outside
-  and outputs it (which means rendering data in the browser.)  
-  : in this project, MeetupItem.svelte, MeetupGrid.svelte
+  1) Basic Props Lifting (from child components to parent components)
+
